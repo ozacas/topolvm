@@ -1,0 +1,12 @@
+---
+
+- name: update namespace.yml
+  template:
+    src:  namespace.yaml
+    dest: "{{ src_dir }}/deploy/manifests/base/namespace.yaml"
+    mode: "0640"
+
+- name: apply namespace now so that other roles can rely on it
+  shell: 
+     cmd: kubectl apply --overwrite -f deploy/manifests/base/namespace.yaml
+     chdir: "{{ src_dir }}"

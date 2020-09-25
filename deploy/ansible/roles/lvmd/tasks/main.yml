@@ -1,0 +1,46 @@
+---
+
+- name: install lvmd binary and configuration
+  become: yes
+  copy: 
+    src: lvmd.arm64 
+    dest: /usr/sbin/lvmd
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: setup key directories
+  become: yes
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+    owner: root
+    group: root
+  with_items:
+  - /etc/lvmd
+  - /etc/topolvm
+  - /etc/systemd/system/
+  - /run/topolvm
+
+- name: install lvmd config
+  become: yes
+  template:
+    src: templates/lvmd.config
+    dest: "{{ item }}"
+    owner: root
+    group: root
+    mode: '0644' 
+  with_items:
+  - /etc/topolvm/lvmd.yaml
+  notify: lvmd systemd
+
+- name: install systemd service definition
+  become: yes
+  template:
+    src: templates/lvmd.service
+    dest: /etc/systemd/system
+    owner: root
+    group: root
+    mode: '0644'
+  notify: lvmd systemd

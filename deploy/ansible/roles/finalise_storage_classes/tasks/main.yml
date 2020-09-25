@@ -1,0 +1,6 @@
+---
+
+- name: make topolvm default storageclass (does not alter other storageclasses)
+  command: 
+    cmd: |
+      kubectl patch storageclass topolvm-provisioner -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'

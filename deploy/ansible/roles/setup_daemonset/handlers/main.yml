@@ -1,0 +1,6 @@
+---
+
+- name: daemonset scheduler
+  shell: 
+    cmd: kustomize build ./deploy/manifests/overlays/daemonset-scheduler | kubectl apply -f -
+    chdir: "{{ src_dir }}"

@@ -1,0 +1,16 @@
+---
+
+# where to git clone topolvm release to before customisation (via ansible) and deployment
+src_dir: "/home/k8s/ansible"
+src_version: v0.5.3
+master_node: pi6 # host designated to run kubectl (prefer master)
+
+# topolvm container image to use
+image: ozacas/topolvm
+image_tag: 0.5.3
+
+# where to read certificate data from. 
+# Certificates must be generated as per https://www.funkypenguin.co.nz/note/self-signed-certificate-on-mutating-webhook-requires-double-encryption/
+# and will be automagically base64 encoded as required by ansible
+ca_dir: "{{ playbook_dir }}/certificates"
+root_ca_cert: "{{ ca_dir }}/rootCA.crt" 

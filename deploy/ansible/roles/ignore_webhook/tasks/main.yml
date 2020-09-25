@@ -1,0 +1,5 @@
+---
+
+- name: set ignore webhook for kube-system namespace
+  command: kubectl label ns kube-system --overwrite=true topolvm.cybozu.com/webhook=ignore 
+   

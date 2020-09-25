@@ -1,0 +1,8 @@
+---
+
+- name: install templated mutatingwebhooks.yaml into deployment dir
+  template:
+    src: mutatingwebhooks.yaml
+    dest: "{{ src_dir }}/deploy/manifests/base/"
+   
+# DONT deploy yet, will do it later in the playbook 

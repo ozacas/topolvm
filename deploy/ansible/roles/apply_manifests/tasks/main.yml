@@ -1,0 +1,6 @@
+---
+
+- name: apply installed manifests during play
+  shell: 
+    cmd: /usr/bin/kustomize build deploy/manifests/base/ | kubectl apply -f -
+    chdir: "{{ src_dir }}"

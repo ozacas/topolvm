@@ -1,0 +1,27 @@
+
+- name: perform node-specific setup
+  hosts: all
+  roles:
+    - lvmd
+
+- name: ensure kustomize is installed
+  hosts: all
+  become: yes
+  tasks:
+    - pacman: name=kustomize state=present
+
+- name: configure kubernetes cluster via master node
+  hosts: pi6
+  roles:
+    - checkout_topolvm
+    - setup_namespace
+    - setup_base
+    - setup_webhooks
+    - setup_provisioner
+    - setup_daemonset
+    - fix_kube_scheduler
+    - cert_manager 
+    - ignore_webhook
+    - apply_manifests
+    - patch_kube_scheduler
+    - finalise_storage_classes

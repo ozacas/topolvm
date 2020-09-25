@@ -1,0 +1,11 @@
+---
+
+- name: install templates for node and controller containers
+  template:
+     src: "{{ item }}"
+     dest: "{{ src_dir }}/deploy/manifests/base/{{ item }}"
+     mode: "0640"
+  with_items:
+    - node.yaml
+    - controller.yaml
+  notify: base handler

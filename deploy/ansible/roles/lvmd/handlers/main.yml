@@ -1,0 +1,12 @@
+---
+
+
+- name: lvmd systemd
+  block:
+  - systemd:
+     name: lvmd
+     state: reloaded
+     daemon_reload: yes
+  - service:
+     name: lvmd
+     state: restarted

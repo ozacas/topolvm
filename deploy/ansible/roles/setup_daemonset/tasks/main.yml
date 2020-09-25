@@ -1,0 +1,11 @@
+---
+
+- name: install templates ready for deployment
+  template:
+    src: "{{ item }}"
+    dest: "{{ src_dir }}/deploy/manifests/overlays/daemonset-scheduler/{{ item }}"
+    mode: '0640'
+  with_items:
+    - kustomization.yaml
+    - scheduler.yaml
+  notify: daemonset scheduler

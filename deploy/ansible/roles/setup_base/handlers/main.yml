@@ -1,0 +1,6 @@
+---
+
+- name: base handler
+  shell:
+    cmd: kustomize build ./deploy/manifests/base | kubectl apply -f -
+    chdir: "{{ src_dir }}"

@@ -1,0 +1,32 @@
+---
+
+- name: patch command args 
+  become: yes
+  lineinfile:
+    path: /etc/kubernetes/manifests/kube-scheduler.yaml
+    insertafter: '^\s+\-\s+\-\-port=0'
+    regex: '^\s+\-\s+\-\-config=/var/lib/scheduler'
+    line: '    - --config=/var/lib/scheduler/scheduler-config.yaml'
+
+- name: add volume
+  become: yes
+  blockinfile:
+    path: /etc/kubernetes/manifests/kube-scheduler.yaml
+    insertafter: '^\s+volumes\:\s*$'
+    marker: "# {mark} volume"
+    block: |2
+        - hostPath:
+            path: /etc/topolvm/scheduler
+            type: Directory
+          name: topolvm-config
+
+- name: add volumeMount
+  become: yes
+  blockinfile:
+    marker: "# {mark} volumeMount"
+    path: /etc/kubernetes/manifests/kube-scheduler.yaml
+    insertafter: '^\s+volumeMounts\:\s*$'
+    block: |2
+          - mountPath: /var/lib/scheduler
+            name: topolvm-config
+            readOnly: true

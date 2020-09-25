@@ -1,0 +1,11 @@
+- hosts: pi1
+  become: yes
+  tasks:
+    - command: systemctl stop mongodb
+    - wait_for: timeout=5
+
+- hosts: all
+  become: yes
+  tasks:
+    - command: /sbin/poweroff
+      ignore_errors: yes

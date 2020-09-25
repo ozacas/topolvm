@@ -1,0 +1,7 @@
+---
+
+- name: install provisoner.yaml ready for deployment
+  template:
+    src: provisioner.yaml
+    dest: "{{ src_dir }}/deploy/manifests/base/provisioner.yaml"
+    mode: '0640' 

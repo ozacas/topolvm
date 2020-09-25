@@ -1,0 +1,14 @@
+---
+
+- name: create deploy folder
+  file:
+    state: directory
+    path: "{{ src_dir }}"
+    mode: '0750'
+
+- name: checkout topolvm into deploy folder for other roles to use
+  git:
+    repo: 'https://github.com/topolvm/topolvm.git'
+    dest: "{{ src_dir }}"
+    version: "{{ src_version }}"
+    force: yes
