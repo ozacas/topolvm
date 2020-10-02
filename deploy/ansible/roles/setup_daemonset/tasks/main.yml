@@ -9,3 +9,28 @@
     - kustomization.yaml
     - scheduler.yaml
   notify: daemonset scheduler
+
+# we copy these so you can see what has been deployed
+# scheduler-options.yaml is used by node-scheduler via a volume mount
+- name: copy yaml to "{{ src_dir }}"
+  become: yes
+  copy:
+    src: "{{ src_dir }}/deploy/manifests/base/{{ item }}"
+    remote_src: yes
+    dest: "/etc/topolvm"
+    mode: "0644"
+    owner: root
+    group: root
+  with_items:
+    - scheduler-options.yaml
+    - certificates.yaml  
+    - crd.yaml            
+    - mutatingwebhooks.yaml  
+    - node.yaml         
+    - psp.yaml                
+    - scheduler.yaml
+    - controller.yaml    
+    - kustomization.yaml  
+    - namespace.yaml         
+    - provisioner.yaml  
+

@@ -10,13 +10,16 @@
   copy:
     src: "{{ ca_dir }}/{{ item }}"
     dest: "{{ src_dir }}/certificates"
+    mode: '0400'
   with_items:
     - rootCA.crt
     - rootCA.key
+    - controller.topolvm-system.svc.crt
+    - controller.topolvm-system.svc.key
 
 - name: delete existing secret (errors non-fatal)
   ignore_errors: yes
   command: kubectl -n topolvm-system delete secret mutatingwebhook
 
 - name: install secret
-  command: kubectl -n topolvm-system create secret tls mutatingwebhook --cert="{{ src_dir }}/certificates/rootCA.crt" --key="{{ src_dir }}/certificates/rootCA.key"
+  command: kubectl -n topolvm-system create secret tls mutatingwebhook --cert="{{ src_dir }}/certificates/controller.topolvm-system.svc.crt" --key="{{ src_dir }}/certificates/controller.topolvm-system.svc.key"

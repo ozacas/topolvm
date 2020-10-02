@@ -19,9 +19,14 @@
     - setup_webhooks
     - setup_provisioner
     - setup_daemonset
-    - fix_kube_scheduler
     - cert_manager 
     - ignore_webhook
     - apply_manifests
     - patch_kube_scheduler
     - finalise_storage_classes
+
+- name: ensure lvmd is started
+  hosts: all
+  become: yes
+  tasks:
+    - systemd: state=restarted name=lvmd enabled=yes
